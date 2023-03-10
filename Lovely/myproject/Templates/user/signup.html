@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>RegistrationForm_v2 by Colorlib</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!-- MATERIAL DESIGN ICONIC FONT -->
+		<link rel="stylesheet" href="fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'login/js/ajax.js' %}"></script>
+		
+		<!-- STYLE CSS -->
+		<link rel="stylesheet" href="{% static 'login/css/style.css' %}">
+	</head>
+
+	<body>
+        <div class="col-md-4">
+            {% comment %} {% if messages %}
+                        {% for mess in messages %}
+                        <div class="alert alert-{{mess.tags}}" role="alert">
+                          {{mess}}
+                        </div>
+                        {% endfor %}
+                      {% endif %}  {% endcomment %}
+              <br>
+
+                     {% if otp %}
+                        <form method="POST">
+                          {% csrf_token %}
+                          <fieldset class="form-group">
+                              <legend class="border-bottom display">
+                                  <h3 class="float-left">Verify Your Email</h3>
+
+                              </legend>
+                              <input type="hidden" name="usr" value="{{usr.username}}">
+                              <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text" id="basic-addon1">OTP</span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Enter Your OTP" aria-label="OTP" aria-describedby="basic-addon1" name = 'otp'>
+                              </div>
+                              
+                          </fieldset>
+                          <div class="form-grounp">
+                              <button class="btn mainbtn" type="submit">Verify</button>
+                              <small class="float-right text-muted"><i><a href="#" class="text-dark" 
+                                onclick="ReSendOTP('{{usr.username}}', 'resendOTPmess')"><i id="resendOTPmess">Resend</i> OTP</a></small>
+
+                          </div>
+
+                      </form>
+                      
+                     {% else %}
+
+		<div class="wrapper" style="background-image: url('images/bg-registration-form-2.jpg');">
+      {% if messages %}
+                        {% for mess in messages %}
+                        <div class="alert alert-{{mess.tags}}" role="alert">
+                          {{mess}}
+                        </div>
+                        {% endfor %}
+                      {% endif %} 
+			<div class="inner">
+				<form action="{% url 'signup' %}" method="POST">
+                    {% csrf_token %}
+					<h3>Registration Form</h3>
+					
+                    <div class="form-wrapper">
+						<label for="">User name</label>
+						<input type="text" class="form-control" name="name">
+					</div>
+					<div class="form-wrapper">
+						<label for="">Email</label>
+						<input type="text" class="form-control" name="username">
+					</div>
+					<div class="form-wrapper">
+						<label for="">Password</label>
+						<input type="password" class="form-control" name="password1">
+					</div>
+					<div class="form-wrapper">
+						<label for="">Confirm Password</label>
+						<input type="password" class="form-control" name="password2">
+					</div>
+					<div class="checkbox">
+                        <small class="float-right text-muted">Already have a Account ?<a href="{% url 'login' %}" class="text-dark"> Login</a></small>
+
+					</div>
+					<button class="btn mainbtn" type="submit">Register Now</button>
+
+				</form>
+                {% endif %}
+			</div>
+		</div>
+    {% comment %} <script>
+      function ReSendOTP(username, mess_id) {
+    
+          mess = document.getElementById(mess_id);
+          mess.innerText = "Sending...";
+          $.ajax({
+              type: 'GET',
+              url: '/user/resendOTP',
+              data: {usr:username},
+              success: function(data){
+                  mess.innerText = data;
+      
+              }
+          })
+      }
+  </script> {% endcomment %}
+		
+	</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+   
+</html>

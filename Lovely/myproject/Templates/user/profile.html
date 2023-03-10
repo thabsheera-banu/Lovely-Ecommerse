@@ -1,0 +1,32 @@
+<style>
+   .button{
+      display:inline-block;
+      padding:10px 20px;
+      text-align:center;
+      text-decoration:none;
+      color:#ffffff;
+      background-color:#7aa8b7;
+      border-radius:6px;
+      outline:none;
+   }
+</style>
+
+       <h1>profile</h1>
+     <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+        {{u_form.as_p}}
+        {{p_form.as_p}}
+        <button class="button" type="submit">UPDATE</button>
+        <a class="button" href="{% url 'home' %}">Home</a>
+
+
+     </form>
+     <div>
+      {% if messages %}
+      {% for mess in messages %}
+      <div class="alert alert-{{mess.tags}}" role="alert">
+        {{mess}}
+      </div>
+      {% endfor %}
+    {% endif %} 
+    </div>

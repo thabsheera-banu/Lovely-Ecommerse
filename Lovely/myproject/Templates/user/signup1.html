@@ -1,0 +1,141 @@
+
+{% extends 'main/index.html'%}
+
+ 
+{% block main_body %}
+{% load crispy_forms_tags %}
+{% load static %}  
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+              {% if messages %}
+                          {% for mess in messages %}
+                          <div class="alert alert-{{mess.tags}}" role="alert">
+                            {{mess}}
+                          </div>
+                          {% endfor %}
+                        {% endif %} 
+                <br>
+
+                       {% if otp %}
+                          <form method="POST">
+                            {% csrf_token %}
+                            <fieldset class="form-group">
+                                <legend class="border-bottom display">
+                                    <h3 class="float-left">Verify Your Email</h3>
+
+                                </legend>
+                                <input type="hidden" name="usr" value="{{usr.username}}">
+                                <div class="input-group mb-3">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">OTP</span>
+                                  </div>
+                                  <input type="text" class="form-control" placeholder="Enter Your OTP" aria-label="OTP" aria-describedby="basic-addon1" name = 'otp'>
+                                </div>
+                                
+                            </fieldset>
+                            <div class="form-grounp">
+                                <button class="btn mainbtn" type="submit">Verify</button>
+                                <small class="float-right text-muted"><i><a href="#" class="text-dark" 
+                                  onclick="ReSendOTP('{{usr.username}}', 'resendOTPmess')"><i id="resendOTPmess">Resend</i> OTP</a></small>
+
+                            </div>
+
+                        </form>
+                       {% else %}
+                         <form method="POST">
+                            {% csrf_token %}
+                            <fieldset class="form-group">
+                                <legend class="border-bottom display">
+                                    <h3 class="float-left">Register Now</h3>
+
+                                </legend>
+
+                                {{ form|crispy }}
+                            </fieldset>
+                            <div class="form-grounp">
+                                <button class="btn mainbtn" type="submit">Sign Up</button>
+                                <small class="float-right text-muted">Already have a Account ?<a href="{% url 'login' %}" class="text-dark"> Login</a></small>
+
+                            </div>
+
+                        </form> 
+
+                        
+                        {% endif %}
+               <br>
+           </div>
+           <div class="col-md-4">
+           </div>
+       </div>
+   
+
+{% endblock main_body %}   
+
+
+
+ {% comment %} {% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>lovely</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!-- MATERIAL DESIGN ICONIC FONT -->
+		<link rel="stylesheet" href="fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+		
+		<!-- STYLE CSS -->
+		<link rel="stylesheet" href="{% static 'login/css/style.css' %}">
+	</head>
+
+	<body>
+
+		<div class="wrapper" style="background-image: url('images/bg-registration-form-2.jpg');">
+			<div class="inner">
+				<form action="" method="POST">
+          {% csrf_token %}
+					<h3>Registration Form</h3>
+					<div class="form-group">
+						<div class="form-wrapper">
+							<label for="">First Name</label>
+							 <input  type="text" class="form-control" > 
+              
+						</div>
+						 <div class="form-wrapper">
+							<label for="">Last Name</label>
+							<input type="text" class="form-control" name="name">
+						</div> 
+					</div>
+					<div class="form-wrapper">
+						<label for="">Email</label>
+				 <input type="text" class="form-control" name="email"> 
+          
+					</div>
+					<div class="form-wrapper">
+						<label for="">Password</label>
+						 <input type="password" class="form-control" name="password1"> 
+          
+					</div>
+					<div class="form-wrapper">
+						<label for="">Confirm Password</label>
+					 <input type="password" class="form-control" name="password2">
+          
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox"> I caccept the Terms of Use & Privacy Policy.
+							<span class="checkmark"></span>
+						</label>
+					</div>
+					<button type="submit" >Register Now</button>
+				</form>
+			</div>
+		</div>
+		
+	</body>
+</html>{% endcomment %}
+
+
+

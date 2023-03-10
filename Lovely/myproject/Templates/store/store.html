@@ -1,0 +1,363 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="./index.html"><i class="fa fa-home"></i> Home</a>
+                        <span>Shop ></span>
+                        <span>
+                            {{Product_count}} items found 
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Shop Section Begin -->
+    <section class="shop spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3">
+                    <div class="shop__sidebar">
+                        <div class="sidebar__categories">
+                            <div class="section-title">
+                                <h4>Categories</h4>
+                            </div>
+                            <div class="categories__accordion">
+                                <div class="accordion" id="accordionExample">
+                                    <div class="card">
+                                        <div class="card-heading active">
+                                            <a data-toggle="collapse" data-target="#collapseOne"></a>
+                                        </div>
+                                        <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
+                                            <div class="card-body">
+                                                <ul>
+                                                    <li><a href="{% url 'store' %}">All products</a></li>
+
+                                                    {% for category in links %}
+                                                    <li><a href="{{category.get_url}}">{{category.category_name}}</a></li>
+                                                   {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                   
+                                  
+                                  
+                                </div>
+                            </div>
+                        </div>
+                         <form action="{% url 'filter_by_price' %}" method="GET">
+                        <div class="sidebar__filter">
+                            <div class="section-title">
+                                <h4>Shop by price</h4>
+                            </div>
+                                <div class="filter-range-wrap">
+                                    <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
+                                    
+                                    data-min="{{MIN_price}}" data-max="{{MAX_price}}"></div>
+ 
+                                <div class="range-slider">
+                                    <div class="price-input">
+                                        <p>Price:</p>
+                                     <input type="text" name="min_price" id="minamount" >
+                                        <input type="text" name="max_price" id="maxamount" >
+                                    </div>
+                                </div>
+                            </div>
+                           <a href="#" onclick="this.closest('form').submit(); return false;">Filter</a>
+                        </div>
+                   </form> 
+                        {% comment %} <div class="sidebar__sizes">
+                            <div class="section-title">
+                                <h4>Shop by size</h4>
+                            </div>
+                            <div class="size__list">
+                                <label for="xxs">
+                                    xxs
+                                    <input type="checkbox" id="xxs">
+                                    <span class="checkmark"></span>
+                                </label>
+                               
+                                
+                                
+                                
+                                
+                               
+                                
+                            </div>
+                       
+                        </div> {% endcomment %}
+                        {% comment %} <div class="sidebar__color">
+                            <div class="section-title">
+                                <h4>Shop by size</h4>
+                            </div>
+                            <div class="size__list color__list">
+                                <label for="black">
+                                    Blacks
+                                    <input type="checkbox" id="black">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label for="whites">
+                                    Whites
+                                    <input type="checkbox" id="whites">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label for="reds">
+                                    Reds
+                                    <input type="checkbox" id="reds">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label for="greys">
+                                    Greys
+                                    <input type="checkbox" id="greys">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label for="blues">
+                                    Blues
+                                    <input type="checkbox" id="blues">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label for="beige">
+                                    Beige Tones
+                                    <input type="checkbox" id="beige">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label for="greens">
+                                    Greens
+                                    <input type="checkbox" id="greens">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label for="yellows">
+                                    Yellows
+                                    <input type="checkbox" id="yellows">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                        </div>{% endcomment %}
+                    </div> 
+                </div>
+                
+                
+                
+                <div class="col-lg-9 col-md-9">
+                    
+                    <div class="row">
+                        {% if products %}   
+                        {% for product in products %}
+                        <div class="col-lg-4 col-md-6">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg" data-setbg="{{product.images.url}}" onclick="location.href='{{product.get_url}}';">
+                                    {% comment %} <div class="label new">New</div> {% endcomment %}
+                                    <ul class="product__hover">
+                                        <li><a href="{{product.images.url}}" class="image-popup"><span class="arrow_expand"></span></a></li>
+                                        <li><a href="{% url 'add_to_wishlist' product.id %}"><span class="icon_heart_alt"></span></a></li>
+                                        <li><a href="{{product.get_url}}"><span class="icon_bag_alt"></span></a></li>
+                                    </ul>
+                                </div>
+                                <div class="product__item__text">
+                                    <h6><a href="{{product.get_url}}">{{product.product_name }}</a></h6>
+                                    <div class="rating">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                    <div class="product__price">₹ {{product.price}}</div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                       
+                       
+                       {% endfor %}
+                       {% else %}
+                       <div>
+                        <h2>No results found...please try again</h2>
+                       </div>
+                       {% endif %}
+                       
+                       
+                      
+                       
+                       
+                        <div class="col-lg-12 text-center">
+                            {% if products.has_other_pages %}
+                            <div class="pagination__option">
+                                {% if products.has_previous %}
+                                <a href="?page={{products.previous_page_number}}"><i class="fa fa-angle-left"></i></a>
+                                     {% else %}
+                                     <a href="#"><i class="fa fa-angle-left"></i></a>
+                                      {% endif %} 
+                                      {% for i in products.paginator.page_range %}
+				                           {% if products.number == i %}                              
+                                <a href="#">{{i}}</a>
+                                        {% else %}
+                                        <a href="?page={{i}}">{{i}}</a>
+                                        {% endif %}
+                                        {% endfor %}
+                           {% if products.has_next %}
+                                <a href="?page={{products.next_page_number}}"><i class="fa fa-angle-right"></i></a>
+                                {% else %}
+                                <a href="#"><i class="fa fa-angle-right"></i></a>
+                                 {% endif %}
+
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Shop Section End -->
+
+    <!-- Instagram Begin -->
+    <div class="instagram">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                    <div class="instagram__item set-bg" data-setbg="img/instagram/insta-1.jpg">
+                        <div class="instagram__text">
+                            <i class="fa fa-instagram"></i>
+                            <a href="#">@ ashion_shop</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                    <div class="instagram__item set-bg" data-setbg="img/instagram/insta-2.jpg">
+                        <div class="instagram__text">
+                            <i class="fa fa-instagram"></i>
+                            <a href="#">@ ashion_shop</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                    <div class="instagram__item set-bg" data-setbg="img/instagram/insta-3.jpg">
+                        <div class="instagram__text">
+                            <i class="fa fa-instagram"></i>
+                            <a href="#">@ ashion_shop</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                    <div class="instagram__item set-bg" data-setbg="img/instagram/insta-4.jpg">
+                        <div class="instagram__text">
+                            <i class="fa fa-instagram"></i>
+                            <a href="#">@ ashion_shop</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                    <div class="instagram__item set-bg" data-setbg="img/instagram/insta-5.jpg">
+                        <div class="instagram__text">
+                            <i class="fa fa-instagram"></i>
+                            <a href="#">@ ashion_shop</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                    <div class="instagram__item set-bg" data-setbg="img/instagram/insta-6.jpg">
+                        <div class="instagram__text">
+                            <i class="fa fa-instagram"></i>
+                            <a href="#">@ ashion_shop</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Instagram End -->
+
+    <!-- Footer Section Begin -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-7">
+                    <div class="footer__about">
+                        <div class="footer__logo">
+                            <a href="./index.html"><img src="img/logo.png" alt=""></a>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                        cilisis.</p>
+                        <div class="footer__payment">
+                            <a href="#"><img src="img/payment/payment-1.png" alt=""></a>
+                            <a href="#"><img src="img/payment/payment-2.png" alt=""></a>
+                            <a href="#"><img src="img/payment/payment-3.png" alt=""></a>
+                            <a href="#"><img src="img/payment/payment-4.png" alt=""></a>
+                            <a href="#"><img src="img/payment/payment-5.png" alt=""></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-5">
+                    <div class="footer__widget">
+                        <h6>Quick links</h6>
+                        <ul>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Blogs</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-4">
+                    <div class="footer__widget">
+                        <h6>Account</h6>
+                        <ul>
+                            <li><a href="#">My Account</a></li>
+                            <li><a href="#">Orders Tracking</a></li>
+                            <li><a href="#">Checkout</a></li>
+                            <li><a href="#">Wishlist</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-8 col-sm-8">
+                    <div class="footer__newslatter">
+                        <h6>NEWSLETTER</h6>
+                        <form action="#">
+                            <input type="text" placeholder="Email">
+                            <button type="submit" class="site-btn">Subscribe</button>
+                        </form>
+                        <div class="footer__social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-youtube-play"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-pinterest"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    <div class="footer__copyright__text">
+                        <p>Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
+                    </div>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- Search Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Search here.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search End -->
+
+    {% endblock  %}

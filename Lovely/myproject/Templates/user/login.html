@@ -1,0 +1,101 @@
+
+{% load static %}
+{% comment %} {% include 'includes/header.html' %} {% endcomment %}
+
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>RegistrationForm_v2 by Colorlib</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!-- MATERIAL DESIGN ICONIC FONT -->
+		<link rel="stylesheet" href="fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'main/js/ajax.js' %}"></script>
+		
+		<!-- STYLE CSS -->
+		<link rel="stylesheet" href="{% static 'login/css/style.css' %}">
+
+	</head>
+  
+	<body>
+   
+        <div class="col-md-4">
+
+                 
+
+            {% if otp %}
+              <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom display">
+                        <h3 class="float-left">Verify Your Email</h3>
+
+                    {% comment %} <img src="img/logo.png" class="logo float-right pt-1" width="25"> {% endcomment %}
+                    </legend>
+                    <input type="hidden" name="usr" value="{{usr.username}}">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">OTP</span>
+                      </div>
+                      <input type="text" class="form-control" placeholder="Enter Your OTP" aria-label="OTP" aria-describedby="basic-addon1" name = 'otp'>
+                    </div>
+                    
+                </fieldset>
+                <div class="form-grounp">
+                    <button class="btn mainbtn" type="submit">Verify</button>
+                    <small class="float-right text-muted"><i><a href="#" class="text-dark" 
+                      onclick="ReSendOTP('{{usr.username}}', 'resendOTPmess')"><i id="resendOTPmess">Resend</i> OTP</a></small>
+
+                </div>
+
+            </form>
+           {% else %}              
+
+		<div class="wrapper" style="background-image: url('images/bg-registration-form-2.jpg');">
+
+      
+			<div class="inner">
+				<form action="{% url 'login' %}" method="POST">
+                    {% csrf_token %}
+					<h3>LOGIN </h3>
+          <div class="text text-center">
+            {% if messages %}
+{% for mess in messages %}
+<div class="alert alert-{{mess.tags}}" role="alert">
+{{mess}}
+</div>
+{% endfor %}
+{% endif %} 
+          </div>     
+					
+					<div class="form-wrapper">
+						<label for="">Email</label>
+						<input type="text" class="form-control" name="username">
+					</div>
+					<div class="form-wrapper">
+						<label for="">Password</label>
+						<input type="password" class="form-control" name="password">
+					</div>
+					
+					<div class="checkbox">
+						
+            <small class="float-right text-muted">Dont have an  a Account ?<a href="{% url 'signup' %}" class="text-dark"> Register</a></small>
+
+						
+					</div>
+					<button class="btn mainbtn" type="submit">Login</button>
+                    <br>
+                    <div>
+                        <a href="{% url 'password_reset' %}" class="text-dark"> Forgotten Password?</a>
+
+                    </div>
+				</form>
+                {% endif %}
+			</div>
+		</div>
+		
+	</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>
