@@ -168,8 +168,8 @@ LOGIN_REDIRECT_URL='home'
 EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST='smtp.gmail.com'
 EMAIL_PORT=587
-EMAIL_HOST_USER='banuthabsheera@gmail.com'
-EMAIL_HOST_PASSWORD='llrdkxrfqqolojcr'
+EMAIL_HOST_USER='banuthabsheera23@gmail.com'
+EMAIL_HOST_PASSWORD='zfafvdkcsihnkxmu'
 EMAIL_USE_TLS=True
 
 # Default primary key field type
