@@ -13,12 +13,14 @@
       <p>{{ message }}</p>
       {% else %} {% endcomment %}
       <div class="card-group ">
+
           <form action="{% url 'checkout' %}" method="POST">
           
           {% comment %} <input type="hidden" name="form_type" value="form2"> {% endcomment %}
 
               {% csrf_token %}
       <div class="row" >
+
               {% for i in address  %}
         <div class="card mb-4 mr-4 ">
           <input type="radio" name="adress" value="{{i.name}}-{{ i.address }}-{{ i.city }}-{{ i.state }}-{{ i.postal_code }}-{{ i.country }}-{{i.phone}}">
@@ -33,12 +35,16 @@
           </div>
         </div>
         {% endfor %}
+
       </div>
+      
       <div>
         <button class"btn btn-danger " type="submit">Choose</button> 
       </div>
+      
       <hr>
       </form>
+     
       </div>
       {% comment %} {% endif %} {% endcomment %}
     </div>

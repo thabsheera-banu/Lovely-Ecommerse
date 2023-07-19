@@ -8,8 +8,10 @@
 <section class="section-conten padding-y bg">
 
 <div class="container card mb-3 ">
+	
 	<div class="row">
 	{% include 'includes/dashboard_sidebar.html' %}
+	{% if order is not None %}
 	<main class="col-md-9 mt-5">
 		<article class="mb-3">
 		<header class="card-header">
@@ -70,8 +72,15 @@
 
 		</article> <!-- order-group.// -->
 	</main>
+	{% else %}
+	<div>
+	<h2 class="text-center"> Your cart is empty </h2>
+	</div>
+	{% endif %}
+
 </div> <!-- row.// -->
 </div>
+
 
 
 </section>
